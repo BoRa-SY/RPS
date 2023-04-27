@@ -11,5 +11,6 @@ namespace Client
         public static string Secret = null;
         public static string username = null;
         public static string opponent_username = null;
+        public static FormCreate formcreate; 
     }
 }

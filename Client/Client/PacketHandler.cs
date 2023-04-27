@@ -12,7 +12,7 @@ namespace Client
     public static class PacketHandler
     {
         static SimpleTcpClient client;
-
+        private static readonly string splitter = "[;]";
         public static void Init()
         {
             client = new SimpleTcpClient() { Delimiter = 0x0013, StringEncoder = Encoding.UTF8 };
@@ -23,14 +23,20 @@ namespace Client
         public static OnStartGameNotifier onStartGameNotifier = null;
         private static void Client_DelimiterDataReceived(object sender, Message e)
         {
-            dynamic json = JObject.Parse(e.MessageString);
-            int packettype = json.packetType;
-            switch(packettype)
+            string[] pairs = e.MessageString.Split(splitter);
+
+            foreach(string jsonstr in pairs)
             {
-                case 8:
-                    if (onStartGameNotifier != null) onStartGameNotifier(JsonConvert.DeserializeObject<StartGameNotifier>(e.MessageString));
-                    break;
+                dynamic json = JObject.Parse(jsonstr);
+                int packettype = json.packetType;
+                switch (packettype)
+                {
+                    case 8:
+                        if (onStartGameNotifier != null) onStartGameNotifier(JsonConvert.DeserializeObject<StartGameNotifier>(jsonstr));
+                        break;
+                }
             }
+
         }
 
         public static GameCreateResponse CreateGame(string username, int maxWin)
@@ -43,9 +49,16 @@ namespace Client
             string jsonstr = JsonConvert.SerializeObject(toSend);
             Message msg = client.WriteLineAndGetReply(jsonstr, TimeSpan.FromSeconds(1000));
             if (msg == null) { throw new Exception("Packet timed out"); }
-            string responsestr = msg.MessageString;
-            GameCreateResponse response = JsonConvert.DeserializeObject<GameCreateResponse>(responsestr);
-            return response;
+
+            foreach(string responsestr in msg.MessageString.Split(splitter))
+            {
+                dynamic jsonResponse = JObject.Parse(responsestr);
+                if ((int)jsonResponse.packetType != 2) continue;
+                GameCreateResponse response = JsonConvert.DeserializeObject<GameCreateResponse>(responsestr);
+                return response;
+            }
+
+            return null;
         }
 
         public static GameJoinResponse JoinGame(string joincode, string username)
@@ -58,9 +71,16 @@ namespace Client
             string jsonstr = JsonConvert.SerializeObject(toSend);
             Message msg = client.WriteLineAndGetReply(jsonstr, TimeSpan.FromSeconds(1000));
             if (msg == null) { throw new Exception("Packet timed out"); }
-            string responsestr = msg.MessageString;
-            GameJoinResponse response = JsonConvert.DeserializeObject<GameJoinResponse>(responsestr);
-            return response;
+
+            foreach (string responsestr in msg.MessageString.Split(splitter))
+            {
+                dynamic jsonResponse = JObject.Parse(responsestr);
+                if ((int)jsonResponse.packetType != 4) continue;
+                GameJoinResponse response = JsonConvert.DeserializeObject<GameJoinResponse>(responsestr);
+                return response;
+            }
+
+            return null;
         }
 
 
