@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,6 +17,7 @@ namespace Client
         public FormCreate()
         {
             InitializeComponent();
+            Statics.formcreate = this;
         }
 
         private void buttonCreate_Click(object sender, EventArgs e)
@@ -29,11 +31,16 @@ namespace Client
 
         void onStartGameNotifier(StartGameNotifier p)
         {
-            Statics.username = p.p1username;
-            Statics.opponent_username = p.p2username;
-            FormGame gameform = new FormGame();
-            gameform.Show();
-            this.Hide();
+            Thread thr = new Thread(new ThreadStart(() =>
+            {
+                Statics.username = p.p1username;
+                Statics.opponent_username = p.p2username;
+                FormGame gameform = new FormGame();
+                Statics.formcreate.Hide();
+                gameform.ShowDialog();
+            }));
+            thr.Start();
+
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Server
     public class PacketHandler
     {
         SimpleTcpServer server;
-
+        private readonly string splitter = "[;]";
 
 
         public PacketHandler(OnGameCreate ogc, OnGameJoin ogj, OnMakeMove omm, OnEndGame oeg)
@@ -74,7 +74,7 @@ namespace Server
 
             string jsonstr = JsonConvert.SerializeObject(p);
 
-            tcpmsg.Reply(jsonstr);
+            tcpmsg.Reply(jsonstr + splitter);
         }
         public void SendPacket(GameJoinResponse p, string secret)
         {
@@ -84,13 +84,13 @@ namespace Server
 
             string jsonstr = JsonConvert.SerializeObject(p);
 
-            tcpmsg.Reply(jsonstr);
+            tcpmsg.Reply(jsonstr + splitter);
         }
         public void SendPacket(GameJoinResponse p, Message m)
         {
             string jsonstr = JsonConvert.SerializeObject(p);
 
-            m.Reply(jsonstr);
+            m.Reply(jsonstr + splitter);
         }
         public void SendPacket(MakeMoveResponse p, string secret)
         {
@@ -100,25 +100,25 @@ namespace Server
 
             string jsonstr = JsonConvert.SerializeObject(p);
 
-            tcpmsg.Reply(jsonstr);
+            tcpmsg.Reply(jsonstr + splitter);
         }
         public void SendPacket(EndGameNotifier p, SS_Game game)
         {
             string jsonstr = JsonConvert.SerializeObject(p);
-            game.player1.TCPMessage.ReplyLine(jsonstr);
-            game.player2.TCPMessage.ReplyLine(jsonstr);
+            game.player1.TCPMessage.ReplyLine(jsonstr + splitter);
+            game.player2.TCPMessage.ReplyLine(jsonstr + splitter);
         }
 
         public void SendPacket(StartGameNotifier p, SS_Game game)
         {
             string jsonstr = JsonConvert.SerializeObject(p);
-            game.player1.TCPMessage.ReplyLine(jsonstr);
+            game.player1.TCPMessage.ReplyLine(jsonstr + splitter);
         }
         public void SendPacket(EndTourNotifier p, SS_Game game)
         {
             string jsonstr = JsonConvert.SerializeObject(p);
-            game.player1.TCPMessage.ReplyLine(jsonstr);
-            game.player2.TCPMessage.ReplyLine(jsonstr);
+            game.player1.TCPMessage.ReplyLine(jsonstr + splitter);
+            game.player2.TCPMessage.ReplyLine(jsonstr + splitter);
         }
     }
 }
