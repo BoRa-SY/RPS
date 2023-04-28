@@ -46,13 +46,23 @@ namespace Client.Packets
     {
         public readonly int packetType = 6;
         public bool success;
+        public bool isEndTour;
+        public TourInfo endTourinfo;
+        public class TourInfo
+        {
+            public RPS p1RPS;
+            public RPS p2RPS;
+
+            public int p1Points;
+            public int p2Points;
+        }
     }
 
     #endregion
 
     #region sv -> cli_x & cli_y
 
-    public class EndTourNotifier
+    public class EndTourNotif
     {
         public readonly int packetType = 7;
         public RPS p1RPS;
@@ -72,7 +82,6 @@ namespace Client.Packets
         public string p2username;
     }
     #endregion
-
     #region cli_x || cli_y -> sv -> cli_y & cli_x
     public class EndGame
     {

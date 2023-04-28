@@ -114,11 +114,16 @@ namespace Server
             string jsonstr = JsonConvert.SerializeObject(p);
             game.player1.TCPMessage.ReplyLine(jsonstr + splitter);
         }
-        public void SendPacket(EndTourNotifier p, SS_Game game)
+
+        public void SendPacket(EndTourNotif p, string secret)
         {
+            SS_Game game = GameHandler.games.Where(x => x.player1.Secret == secret || x.player2.Secret == secret).FirstOrDefault();
+
+            Message tcpmsg = game.player1.Secret == secret ? game.player1.TCPMessage : game.player2.TCPMessage;
+
             string jsonstr = JsonConvert.SerializeObject(p);
-            game.player1.TCPMessage.ReplyLine(jsonstr + splitter);
-            game.player2.TCPMessage.ReplyLine(jsonstr + splitter);
+
+            tcpmsg.ReplyLine(jsonstr + splitter);
         }
     }
 }

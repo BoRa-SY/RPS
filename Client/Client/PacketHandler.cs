@@ -13,6 +13,7 @@ namespace Client
     {
         static SimpleTcpClient client;
         private static readonly string splitter = "[;]";
+        private static readonly int timeout = 30000;
         public static void Init()
         {
             client = new SimpleTcpClient() { Delimiter = 0x0013, StringEncoder = Encoding.UTF8 };
@@ -20,7 +21,12 @@ namespace Client
             client.Connect("127.0.0.1", 1286);
         }
         public delegate void OnStartGameNotifier(StartGameNotifier p);
+        public delegate void OnEndTourNotifier(EndTourNotif p);
         public static OnStartGameNotifier onStartGameNotifier = null;
+        public static OnEndTourNotifier onEndTourNotifier = null;
+
+
+
         private static void Client_DelimiterDataReceived(object sender, Message e)
         {
             string[] pairs = e.MessageString.Split(splitter);
@@ -33,6 +39,9 @@ namespace Client
                 {
                     case 8:
                         if (onStartGameNotifier != null) onStartGameNotifier(JsonConvert.DeserializeObject<StartGameNotifier>(jsonstr));
+                        break;
+                    case 7:
+                        if (onEndTourNotifier != null) onEndTourNotifier(JsonConvert.DeserializeObject<EndTourNotif>(jsonstr));
                         break;
                 }
             }
@@ -47,7 +56,7 @@ namespace Client
                 username = username
             };
             string jsonstr = JsonConvert.SerializeObject(toSend);
-            Message msg = client.WriteLineAndGetReply(jsonstr, TimeSpan.FromSeconds(1000));
+            Message msg = client.WriteLineAndGetReply(jsonstr, TimeSpan.FromSeconds(timeout));
             if (msg == null) { throw new Exception("Packet timed out"); }
 
             foreach(string responsestr in msg.MessageString.Split(splitter))
@@ -69,7 +78,7 @@ namespace Client
                 username = username
             };
             string jsonstr = JsonConvert.SerializeObject(toSend);
-            Message msg = client.WriteLineAndGetReply(jsonstr, TimeSpan.FromSeconds(1000));
+            Message msg = client.WriteLineAndGetReply(jsonstr, TimeSpan.FromSeconds(timeout));
             if (msg == null) { throw new Exception("Packet timed out"); }
 
             foreach (string responsestr in msg.MessageString.Split(splitter))
@@ -83,6 +92,27 @@ namespace Client
             return null;
         }
 
+        public static MakeMoveResponse makeMove(RPS rps, string secret)
+        {
+            MakeMove toSend = new MakeMove()
+            {
+                rps = rps,
+                secret = secret
+            };
 
+            string jsonstr = JsonConvert.SerializeObject(toSend);
+            Message msg = client.WriteLineAndGetReply(jsonstr, TimeSpan.FromSeconds(timeout));
+            if (msg == null) { throw new Exception("Packet timed out"); }
+
+            foreach (string responsestr in msg.MessageString.Split(splitter))
+            {
+                dynamic jsonResponse = JObject.Parse(responsestr);
+                if ((int)jsonResponse.packetType != 6) continue;
+                MakeMoveResponse response = JsonConvert.DeserializeObject<MakeMoveResponse>(responsestr);
+                return response;
+            }
+
+            return null;
+        }
     }
 }

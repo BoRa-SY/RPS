@@ -33,8 +33,10 @@ namespace Client
         {
             Thread thr = new Thread(new ThreadStart(() =>
             {
+                PacketHandler.onStartGameNotifier = null;
                 Statics.username = p.p1username;
                 Statics.opponent_username = p.p2username;
+                Statics.currentPlayer = 1;
                 FormGame gameform = new FormGame();
                 Statics.formcreate.Hide();
                 gameform.ShowDialog();

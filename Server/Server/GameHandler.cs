@@ -100,23 +100,43 @@ namespace Server
             if (p.secret == game.player1.Secret) game.currentTour.p1_RPS = (RPSN)(int)p.rps;
                                             else game.currentTour.p2_RPS = (RPSN)(int)p.rps;
 
-            if(game.currentTour.p2_RPS != RPSN.None && game.currentTour.p1_RPS != RPSN.None)
+            MakeMoveResponse moveresp = new MakeMoveResponse()
+            {
+                success = true,
+                isEndTour = false
+            };
+
+            if (game.currentTour.p2_RPS != RPSN.None && game.currentTour.p1_RPS != RPSN.None)
             {
                 int tourwinner = Utils.calculateWinner(game.currentTour.p1_RPS, game.currentTour.p2_RPS);
 
                 if (tourwinner == 1) game.player1.wins++;
                 else if (tourwinner == 2) game.player2.wins++;
                 else if (tourwinner != 0) throw new Exception("Unknown tour winner");
-            }
-            EndTourNotifier notifier = new EndTourNotifier()
-            {
-                p1RPS = (RPS)(int)game.currentTour.p1_RPS,
-                p2RPS = (RPS)(int)game.currentTour.p2_RPS,
-                p1Points = game.player1.wins,
-                p2Points = game.player2.wins
-            };
-            packetHandler.SendPacket(notifier, game);
 
+                moveresp.isEndTour = true;
+                moveresp.endTourinfo = new MakeMoveResponse.TourInfo()
+                {
+                    p1RPS = (RPS)(int)game.currentTour.p1_RPS,
+                    p2RPS = (RPS)(int)game.currentTour.p2_RPS,
+                    p1Points = game.player1.wins,
+                    p2Points = game.player2.wins
+                };
+
+                EndTourNotif etnotif = new EndTourNotif()
+                {
+                    p1RPS = (RPS)(int)game.currentTour.p1_RPS,
+                    p2RPS = (RPS)(int)game.currentTour.p2_RPS,
+                    p1Points = game.player1.wins,
+                    p2Points = game.player2.wins
+                };
+
+                game.currentTour.p1_RPS = RPSN.None;
+                game.currentTour.p2_RPS = RPSN.None;
+                packetHandler.SendPacket(etnotif, p.secret == game.player1.Secret ? game.player2.Secret : game.player1.Secret);
+            }
+
+            packetHandler.SendPacket(moveresp, p.secret);
         }
         public static void onEndGame(Server.Packets.EndGame p)
         {

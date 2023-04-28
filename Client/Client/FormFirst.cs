@@ -28,6 +28,7 @@ namespace Client
             Statics.Secret = joininfo.p2secret;
             Statics.opponent_username = joininfo.p1username;
             Statics.username = textBoxUsername.Text;
+            Statics.currentPlayer = 2;
             FormGame gameform = new FormGame();
             gameform.Show();
             this.Hide();
