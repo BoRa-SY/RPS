@@ -18,7 +18,7 @@ namespace Client
         {
             client = new SimpleTcpClient() { Delimiter = 0x0013, StringEncoder = Encoding.UTF8 };
             client.DelimiterDataReceived += Client_DelimiterDataReceived;
-            client.Connect("127.0.0.1", 1286);
+            client.Connect("188.132.198.137", 1286);
         }
         public delegate void OnStartGameNotifier(StartGameNotifier p);
         public delegate void OnEndTourNotifier(EndTourNotif p);

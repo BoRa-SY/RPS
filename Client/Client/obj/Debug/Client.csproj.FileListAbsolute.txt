@@ -14,3 +14,4 @@ D:\github\RPS\Client\Client\obj\Debug\Client.exe
 D:\github\RPS\Client\Client\obj\Debug\Client.pdb
 D:\github\RPS\Client\Client\obj\Debug\Client.FormCreate.resources
 D:\github\RPS\Client\Client\obj\Debug\Client.FormGame.resources
+D:\github\RPS\Client\Client\obj\Debug\Client.FormJoin.resources

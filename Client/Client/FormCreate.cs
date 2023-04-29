@@ -20,12 +20,40 @@ namespace Client
             Statics.formcreate = this;
         }
 
+        #region dragbar
+        Point offset;
+        bool down = false;
+        private void panelDrag_MouseDown(object sender, MouseEventArgs e)
+        {
+            offset = e.Location;
+            down = true;
+        }
+
+        private void panelDrag_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (down)
+            {
+                Point currentScreenPos = PointToScreen(e.Location);
+                Location = new Point(currentScreenPos.X - offset.X, currentScreenPos.Y - offset.Y);
+            }
+        }
+
+        private void panelDrag_MouseUp(object sender, MouseEventArgs e)
+        {
+            down = false;
+        }
+        #endregion
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
         private void buttonCreate_Click(object sender, EventArgs e)
         {
-            GameCreateResponse info = PacketHandler.CreateGame(textBoxUsername.Text, (int)numericUpDownTargetWin.Value);
+            GameCreateResponse info = PacketHandler.CreateGame(textBoxUsername.Text, 0);
             buttonCreate.Enabled = false;
             Statics.Secret = info.p1secret;
-            labelJoinCode.Text = info.joinCode;
+            textBoxJoinCode.Text = info.joinCode;
+            textBoxUsername.ReadOnly = true;
             PacketHandler.onStartGameNotifier = onStartGameNotifier; 
         }
 
@@ -44,5 +72,6 @@ namespace Client
             thr.Start();
 
         }
+
     }
 }

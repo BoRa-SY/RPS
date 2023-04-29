@@ -28,69 +28,87 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxJoinCode = new System.Windows.Forms.TextBox();
             this.buttonJoin = new System.Windows.Forms.Button();
+            this.panelDrag = new System.Windows.Forms.Panel();
             this.buttonCreate = new System.Windows.Forms.Button();
-            this.textBoxUsername = new System.Windows.Forms.TextBox();
+            this.buttonClose = new System.Windows.Forms.Button();
+            this.panelDrag.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // textBoxJoinCode
-            // 
-            this.textBoxJoinCode.Location = new System.Drawing.Point(6, 12);
-            this.textBoxJoinCode.Name = "textBoxJoinCode";
-            this.textBoxJoinCode.Size = new System.Drawing.Size(84, 20);
-            this.textBoxJoinCode.TabIndex = 0;
             // 
             // buttonJoin
             // 
-            this.buttonJoin.Location = new System.Drawing.Point(6, 38);
+            this.buttonJoin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(104)))), ((int)(((byte)(164)))));
+            this.buttonJoin.ForeColor = System.Drawing.Color.White;
+            this.buttonJoin.Location = new System.Drawing.Point(14, 41);
             this.buttonJoin.Name = "buttonJoin";
-            this.buttonJoin.Size = new System.Drawing.Size(251, 23);
+            this.buttonJoin.Size = new System.Drawing.Size(359, 64);
             this.buttonJoin.TabIndex = 1;
             this.buttonJoin.Text = "Join";
-            this.buttonJoin.UseVisualStyleBackColor = true;
+            this.buttonJoin.UseVisualStyleBackColor = false;
             this.buttonJoin.Click += new System.EventHandler(this.buttonJoin_Click);
+            // 
+            // panelDrag
+            // 
+            this.panelDrag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(81)))), ((int)(((byte)(136)))));
+            this.panelDrag.Controls.Add(this.buttonClose);
+            this.panelDrag.Location = new System.Drawing.Point(0, 0);
+            this.panelDrag.Name = "panelDrag";
+            this.panelDrag.Size = new System.Drawing.Size(386, 35);
+            this.panelDrag.TabIndex = 3;
+            this.panelDrag.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelDrag_MouseDown);
+            this.panelDrag.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelDrag_MouseMove);
+            this.panelDrag.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelDrag_MouseUp);
             // 
             // buttonCreate
             // 
-            this.buttonCreate.Location = new System.Drawing.Point(6, 67);
+            this.buttonCreate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(104)))), ((int)(((byte)(164)))));
+            this.buttonCreate.ForeColor = System.Drawing.Color.White;
+            this.buttonCreate.Location = new System.Drawing.Point(14, 106);
             this.buttonCreate.Name = "buttonCreate";
-            this.buttonCreate.Size = new System.Drawing.Size(251, 23);
-            this.buttonCreate.TabIndex = 2;
+            this.buttonCreate.Size = new System.Drawing.Size(359, 64);
+            this.buttonCreate.TabIndex = 4;
             this.buttonCreate.Text = "Create";
-            this.buttonCreate.UseVisualStyleBackColor = true;
+            this.buttonCreate.UseVisualStyleBackColor = false;
             this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
             // 
-            // textBoxUsername
+            // buttonClose
             // 
-            this.textBoxUsername.Location = new System.Drawing.Point(96, 12);
-            this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(161, 20);
-            this.textBoxUsername.TabIndex = 3;
+            this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(81)))), ((int)(((byte)(136)))));
+            this.buttonClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonClose.ForeColor = System.Drawing.Color.White;
+            this.buttonClose.Location = new System.Drawing.Point(343, 2);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(30, 30);
+            this.buttonClose.TabIndex = 5;
+            this.buttonClose.Text = "X";
+            this.buttonClose.UseVisualStyleBackColor = false;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // FormFirst
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 95);
-            this.Controls.Add(this.textBoxUsername);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(104)))), ((int)(((byte)(164)))));
+            this.ClientSize = new System.Drawing.Size(386, 182);
             this.Controls.Add(this.buttonCreate);
+            this.Controls.Add(this.panelDrag);
             this.Controls.Add(this.buttonJoin);
-            this.Controls.Add(this.textBoxJoinCode);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormFirst";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.panelDrag.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBoxJoinCode;
         private System.Windows.Forms.Button buttonJoin;
+        private System.Windows.Forms.Panel panelDrag;
         private System.Windows.Forms.Button buttonCreate;
-        private System.Windows.Forms.TextBox textBoxUsername;
+        private System.Windows.Forms.Button buttonClose;
     }
 }
 

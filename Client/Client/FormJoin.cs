@@ -11,12 +11,11 @@ using System.Windows.Forms;
 
 namespace Client
 {
-    public partial class FormFirst : Form
+    public partial class FormJoin : Form
     {
-        public FormFirst()
+        public FormJoin()
         {
             InitializeComponent();
-            PacketHandler.Init();
         }
 
         #region dragbar
@@ -42,27 +41,30 @@ namespace Client
             down = false;
         }
         #endregion
-
-
         private void buttonClose_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
         }
 
 
-
+        private void textBoxJoinCode_TextChanged(object sender, EventArgs e)
+        {
+            textBoxJoinCode.Text = string.IsNullOrEmpty(textBoxJoinCode.Text) ? "" : textBoxJoinCode.Text.ToUpper();
+            textBoxJoinCode.SelectionStart = textBoxJoinCode.TextLength;
+        }
 
         private void buttonJoin_Click(object sender, EventArgs e)
         {
-            FormJoin frm = new FormJoin();
-            frm.Show();
-            this.Hide();
-        }
-
-        private void buttonCreate_Click(object sender, EventArgs e)
-        {
-            FormCreate frm = new FormCreate();
-            frm.Show();
+            string code = textBoxJoinCode.Text;
+            GameJoinResponse joininfo = PacketHandler.JoinGame(code, textBoxUsername.Text);
+            if (!joininfo.isJoinCodeValid) { MessageBox.Show("Incorrect join code"); return; }
+            if (joininfo.isRoomFull) { MessageBox.Show("Room is already full"); return; }
+            Statics.Secret = joininfo.p2secret;
+            Statics.opponent_username = joininfo.p1username;
+            Statics.username = textBoxUsername.Text;
+            Statics.currentPlayer = 2;
+            FormGame gameform = new FormGame();
+            gameform.Show();
             this.Hide();
         }
 

@@ -28,7 +28,7 @@ namespace Server
 
             server = new SimpleTcpServer() { Delimiter = 0x0013, StringEncoder = Encoding.UTF8};
             server.DelimiterDataReceived += Server_DelimiterDataReceived;
-            server.Start(IPAddress.Parse("127.0.0.1"), 1286);
+            server.Start(IPAddress.Parse(Statics.IPPort.IP),Statics.IPPort.port);
             Console.WriteLine("SV Started");
         }
         public delegate void OnGameCreate(Server.Packets.GameCreate p, Message m);

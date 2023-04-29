@@ -40,7 +40,7 @@ namespace Server
                 p1secret = game.player1.Secret
             };
             games.Add(game);
-            packetHandler.SendPacket(response, response.p1secret);
+            packetHandler.SendPacket(response, game.player1.Secret);
         }
         public static void onGameJoin(Server.Packets.GameJoin p, Message e)
         {
