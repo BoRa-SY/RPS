@@ -14,14 +14,50 @@ namespace Client
 {
     public partial class FormGame : Form
     {
-        public FormGame()
+        bool debug;
+        public FormGame(bool debug = false)
         {
+            this.debug = debug;
             InitializeComponent();
+
         }
         int currentplayer;
+
+        #region dragbar
+        Point offset;
+        bool down = false;
+        private void panelDrag_MouseDown(object sender, MouseEventArgs e)
+        {
+            offset = e.Location;
+            down = true;
+        }
+
+        private void panelDrag_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (down)
+            {
+                Point currentScreenPos = PointToScreen(e.Location);
+                Location = new Point(currentScreenPos.X - offset.X, currentScreenPos.Y - offset.Y);
+            }
+        }
+
+        private void panelDrag_MouseUp(object sender, MouseEventArgs e)
+        {
+            down = false;
+        }
+        #endregion
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+
+
         private void FormGame_Load(object sender, EventArgs e)
         {
-            this.Text = $"U: {Statics.username} / OU: {Statics.opponent_username}";
+            if (debug) return;
+            labelplayerMove.Text = $"{Statics.username} (you)";
+            labelOpponentsMove.Text = $"{Statics.opponent_username}";
             updatePointLabels(0, 0);
             currentplayer = Statics.currentPlayer;
             if (currentplayer != 1 && currentplayer != 2) throw new Exception("Incorrect player num");
@@ -29,31 +65,24 @@ namespace Client
             PacketHandler.onEndTourNotifier = onEndTour;
         }
 
-        private void moveSelected(object sender, EventArgs e)
+
+        Color selectedColor = Color.FromArgb(88,85,142);
+        private void moveSelected(object sender, RPSButton.RPSU rpsu)
         {
-            string movestr = ((Button)sender).Tag.ToString();
-            RPS move = RPS.Rock;
-            switch(movestr)
-            {
-                case "r":
-                    move = RPS.Rock;
-                    break;
-                case "p":
-                    move = RPS.Paper;
-                    break;
-                case "s":
-                    move = RPS.Scissors;
-                    break;
-            }
+            RPS move = (RPS)(int)rpsu;
 
             MakeMoveResponse resp = PacketHandler.makeMove(move, Statics.Secret);
             if (!resp.success) throw new Exception("Error");
-            labelplayerMove.Text = "Your Move: " + Enum.GetName(typeof(RPS), move);
-            buttonRock.Enabled = false;
-            buttonPaper.Enabled = false;
-            buttonScissors.Enabled = false;
+          //  labelplayerMove.Text = "Your Move: " + Enum.GetName(typeof(RPS), move);
+
+
+            var btn = (RPSButton)sender;
+            btn.BackColor = selectedColor;
             
-            if(resp.isEndTour)
+            ToggleRPSButtonsEnabled(false);
+            labelWFO.Visible = true;
+
+            if (resp.isEndTour)
             {
                 EndTourNotif etn = new EndTourNotif()
                 {
@@ -67,15 +96,14 @@ namespace Client
         }
         void updatePointLabels(int point, int opponentPoint)
         {
-            labelPoints.Text = $"{Statics.username} (you): {point}";
-            labelOpponentPoints.Text = $"{Statics.opponent_username}: {opponentPoint}";
+            labelPoints.Text = $"Points: {point}";
+            labelOpPoints.Text = $"Points: {opponentPoint}";
         }
 
         void onEndTour(EndTourNotif p)
         {
-            buttonRock.Enabled = false;
-            buttonPaper.Enabled = false;
-            buttonScissors.Enabled = false;
+            ToggleRPSButtonsEnabled(false);
+            labelWFO.Visible = false;
             if (currentplayer == 1)
             {
                 updatePointLabels(p.p1Points, p.p2Points);
@@ -90,23 +118,41 @@ namespace Client
             {
                 if(currentplayer == 1)
                 {
-                    labelOpponentsMove.Text = "Opponent's move: " + Enum.GetName(typeof(RPS), p.p2RPS);
-                    labelplayerMove.Text = "Your Move: " + Enum.GetName(typeof(RPS), p.p1RPS);
+                    rpsButtonOpponent.rps = (RPSButton.RPSU)(int)p.p2RPS;
+                   // labelOpponentsMove.Text = "Opponent's move: " + Enum.GetName(typeof(RPS), p.p2RPS);
+                   // labelplayerMove.Text = "Your Move: " + Enum.GetName(typeof(RPS), p.p1RPS);
                 }
                 else 
-                { 
-                    labelOpponentsMove.Text = "Opponent's move: " + Enum.GetName(typeof(RPS), p.p1RPS);
-                    labelplayerMove.Text = "Your Move: " + Enum.GetName(typeof(RPS), p.p2RPS);
+                {
+
+                    rpsButtonOpponent.rps = (RPSButton.RPSU)(int)p.p1RPS;
+                  //  labelOpponentsMove.Text = "Opponent's move: " + Enum.GetName(typeof(RPS), p.p1RPS);
+                  //  labelplayerMove.Text = "Your Move: " + Enum.GetName(typeof(RPS), p.p2RPS);
                 }
                 Thread.Sleep(3000);
-                labelOpponentsMove.Text = "Opponent's move: ?";
-                labelplayerMove.Text = "Your Move: ?";
+              //  labelOpponentsMove.Text = "Opponent's move: ?";
+             //   labelplayerMove.Text = "Your Move: ?";
 
-                buttonRock.Enabled = true;
-                buttonPaper.Enabled = true;
-                buttonScissors.Enabled = true;
 
+                ToggleRPSButtonsEnabled(true);
+                ToggleRPSButtonsColor(rpsButton1.defaultColor);
+
+                rpsButtonOpponent.rps = RPSButton.RPSU.Unknown;
             })).Start();
+        }
+
+        void ToggleRPSButtonsEnabled(bool b)
+        {
+            rpsButton1.Enabled = b;
+            rpsButton2.Enabled = b;
+            rpsButton3.Enabled = b;
+        }
+
+        void ToggleRPSButtonsColor(Color c)
+        {
+            rpsButton1.BackColor = c;
+            rpsButton2.BackColor = c;
+            rpsButton3.BackColor = c;
         }
     }
 }

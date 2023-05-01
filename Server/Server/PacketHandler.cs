@@ -62,7 +62,7 @@ namespace Server
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"ERROR: Couldn't parse packet\nPacket: {e.MessageString}\nEx: {ex.Message}");
+                Console.WriteLine($"ERROR\nPacket: {e.MessageString}\nEx: {ex.Message}");
             }
         }
 

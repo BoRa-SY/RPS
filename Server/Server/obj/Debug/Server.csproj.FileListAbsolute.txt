@@ -10,3 +10,14 @@ D:\github\RPS\Server\Server\obj\Debug\Server.exe
 D:\github\RPS\Server\Server\obj\Debug\Server.pdb
 D:\github\RPS\Server\Server\bin\Debug\Newtonsoft.Json.dll
 D:\github\RPS\Server\Server\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\bin\Debug\Server.exe.config
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\bin\Debug\Server.exe
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\bin\Debug\Server.pdb
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\bin\Debug\SimpleTCP.dll
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\obj\Debug\Server.csproj.AssemblyReference.cache
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\obj\Debug\Server.csproj.SuggestedBindingRedirects.cache
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\obj\Debug\Server.csproj.CopyComplete
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\obj\Debug\Server.exe
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Server\Server\obj\Debug\Server.pdb

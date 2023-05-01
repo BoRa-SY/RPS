@@ -18,6 +18,7 @@ namespace Client
             Application.SetCompatibleTextRenderingDefault(false);
             Control.CheckForIllegalCrossThreadCalls = false;
             Application.Run(new FormFirst());
+         // Application.Run(new FormGame(true));
         }
     }
 }

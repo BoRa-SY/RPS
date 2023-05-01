@@ -15,3 +15,19 @@ D:\github\RPS\Client\Client\obj\Debug\Client.pdb
 D:\github\RPS\Client\Client\obj\Debug\Client.FormCreate.resources
 D:\github\RPS\Client\Client\obj\Debug\Client.FormGame.resources
 D:\github\RPS\Client\Client\obj\Debug\Client.FormJoin.resources
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\bin\Debug\Client.exe.config
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\bin\Debug\Client.exe
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\bin\Debug\Client.pdb
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.csproj.AssemblyReference.cache
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.csproj.SuggestedBindingRedirects.cache
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.FormCreate.resources
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.FormFirst.resources
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.FormGame.resources
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.FormJoin.resources
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.Properties.Resources.resources
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.csproj.GenerateResource.cache
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.csproj.CopyComplete
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.exe
+C:\Users\Bora Şimşekyılmaz\Desktop\RPS\Client\Client\obj\Debug\Client.pdb

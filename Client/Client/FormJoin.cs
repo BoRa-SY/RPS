@@ -46,13 +46,6 @@ namespace Client
             Environment.Exit(0);
         }
 
-
-        private void textBoxJoinCode_TextChanged(object sender, EventArgs e)
-        {
-            textBoxJoinCode.Text = string.IsNullOrEmpty(textBoxJoinCode.Text) ? "" : textBoxJoinCode.Text.ToUpper();
-            textBoxJoinCode.SelectionStart = textBoxJoinCode.TextLength;
-        }
-
         private void buttonJoin_Click(object sender, EventArgs e)
         {
             string code = textBoxJoinCode.Text;
